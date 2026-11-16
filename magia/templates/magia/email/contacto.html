@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="es">
+<body style="margin:0;padding:0;background:#ece8f2;font-family:Arial,Helvetica,sans-serif;color:#1d2a24;">
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#ece8f2;padding:24px 12px;">
+    <tr><td align="center">
+      <table role="presentation" width="560" cellpadding="0" cellspacing="0" style="max-width:560px;width:100%;background:#ffffff;border-radius:12px;overflow:hidden;">
+        <tr><td style="background:{{ site.color_dark }};color:#ffffff;padding:18px 28px;font-size:20px;">
+          Nuevo mensaje · {{ site.site_name }}
+        </td></tr>
+        <tr><td style="padding:28px;font-size:16px;line-height:1.7;">
+          <strong style="font-size:20px;">{{ m.name }}</strong><br>
+          Email: <a href="mailto:{{ m.email }}">{{ m.email }}</a><br>
+          {% if m.course %}Curso: <strong>{{ m.course }}</strong><br>{% endif %}
+          <br><em>{{ m.message|linebreaksbr }}</em>
+          <p style="margin-top:22px;font-size:13px;color:#667;">Puedes responder directamente a este correo.</p>
+        </td></tr>
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html>

@@ -1,0 +1,13 @@
+.env
+venv/
+.venv/
+__pycache__/
+*.pyc
+db.sqlite3
+staticfiles/
+.vscode/
+media/
+.taste-skill/
+.claude/
+.agents/
+skills-lock.json

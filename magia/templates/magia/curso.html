@@ -1,0 +1,42 @@
+{% extends "magia/base.html" %}
+{% load static magia_extras %}
+{% block title %}{{ course.title }} · {{ site.site_name }}{% endblock %}
+{% block description %}{{ course.summary }}{% endblock %}
+{% block content %}
+<section class="section">
+  <div class="container">
+    <a class="back" href="{% url 'cursos' %}">{% icon 'arrow-left' 16 %} Todos los cursos</a>
+    <div class="course">
+      <article class="course__main">
+        <h1>{{ course.title }}</h1>
+        <p class="course__summary">{{ course.summary }}</p>
+        <div class="richtext">{{ course.description|richtext }}</div>
+
+        {# Apartados del curso (qué aprenderás, temario, requisitos...): se editan en el panel, dentro de cada curso #}
+        {% for b in course.blocks.all %}
+        <section class="course__section">
+          <h2>{{ b.title }}</h2>
+          <div class="richtext">{{ b.text|richtext }}</div>
+        </section>
+        {% endfor %}
+      </article>
+
+      <aside class="aside">
+        <div class="aside__img">
+          {% if course.image %}<img src="{{ course.image.url }}" alt="">{% else %}<img src="{% static 'magia/img/moon.svg' %}" alt="" width="56" height="56">{% endif %}
+        </div>
+        <div class="aside__body">
+          <p class="price">{{ course.price_text|default:"Consultar precio" }}</p>
+          <ul class="facts">
+            <li><span>Nivel</span><strong>{{ course.get_level_display }}</strong></li>
+            {% if course.duration %}<li><span>Duración</span><strong>{{ course.duration }}</strong></li>{% endif %}
+            {% if course.modality %}<li><span>Modalidad</span><strong>{{ course.modality }}</strong></li>{% endif %}
+          </ul>
+          <a class="btn btn--block" href="{% url 'contacto' %}?curso={{ course.slug }}">Pedir información</a>
+          {% if site.instagram_url %}<a class="btn btn--outline btn--block" href="{{ site.instagram_url }}" target="_blank" rel="noopener noreferrer">Preguntar por Instagram</a>{% endif %}
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+{% endblock %}

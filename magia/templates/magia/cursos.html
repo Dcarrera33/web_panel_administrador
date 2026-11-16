@@ -1,0 +1,20 @@
+{% extends "magia/base.html" %}
+{% block title %}Cursos · {{ site.site_name }}{% endblock %}
+{% block content %}
+<section class="section">
+  <div class="container">
+    <header class="page-head">
+      <h1>Cursos</h1>
+      <p class="lead">Elige el curso que mejor encaja contigo. Entra en cada uno para ver el temario, el precio y todos los detalles.</p>
+    </header>
+
+    {% if courses %}
+    <ul class="course-list">
+      {% for c in courses %}{% include "magia/_course_row.html" with heading="h2" %}{% endfor %}
+    </ul>
+    {% else %}
+      <p class="empty">Muy pronto publicaremos los primeros cursos. Mientras tanto, <a href="{% url 'contacto' %}">escríbeme</a> y te cuento.</p>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

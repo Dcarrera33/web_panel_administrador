@@ -1,0 +1,95 @@
+{% load static magia_extras %}<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}{{ site.site_name }}{% endblock %}</title>
+  <meta name="description" content="{% block description %}{{ site.tagline }}{% endblock %}">
+  <meta name="theme-color" content="{{ site.color_dark }}">
+  <link rel="icon" type="image/svg+xml" href="{% static 'magia/img/favicon.svg' %}">
+  <link rel="stylesheet" href="{% url 'theme_css' %}">
+  <link rel="stylesheet" href="{% static 'magia/css/fonts.css' %}">
+  <link rel="stylesheet" href="{% static 'magia/css/style.css' %}">
+  <script src="{% static 'magia/js/main.js' %}" defer></script>
+</head>
+<body>
+<a class="skip-link" href="#contenido">Saltar al contenido</a>
+
+{# Luciérnagas: decoración de fondo (bórralas de aquí si no te gustan) #}
+<div class="fireflies" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+
+<header class="site-header">
+  {# ---------- Encabezado 1: nombre de la web + Instagram (color oscuro) ---------- #}
+  <div class="topbar">
+    <div class="container topbar__inner">
+      <a class="brand" href="{% url 'index' %}">
+        <img class="brand__mark" src="{% static 'magia/img/moon.svg' %}" alt="" width="40" height="40">
+        <span class="brand__text">{{ site.site_name }}</span>
+      </a>
+      {% if site.instagram_url %}
+      <a class="topbar__social" href="{{ site.instagram_url }}" target="_blank" rel="noopener noreferrer" aria-label="Instagram {{ site.instagram_label }}">
+        <span class="handle">{{ site.instagram_label }}</span>
+        <span class="circle">{% icon 'instagram' %}</span>
+      </a>
+      {% endif %}
+    </div>
+  </div>
+
+  {# ---------- Encabezado 2: menú ---------- #}
+  {% with page=request.resolver_match.url_name %}
+  <nav class="mainnav" aria-label="Principal">
+    <div class="container mainnav__inner">
+      <button class="burger" type="button" aria-expanded="false" aria-controls="menu" aria-label="Abrir o cerrar el menú">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="menu" id="menu">
+        <li><a href="{% url 'index' %}" {% if page == 'index' %}aria-current="page"{% endif %}>Inicio</a></li>
+        <li><a href="{% url 'cursos' %}" {% if page == 'cursos' or page == 'curso' %}aria-current="page"{% endif %}>Cursos</a></li>
+        <li><a href="{% url 'saber_mas' %}" {% if page == 'saber_mas' %}aria-current="page"{% endif %}>Saber más</a></li>
+        <li><a href="{% url 'contacto' %}" {% if page == 'contacto' or page == 'contacto_ok' %}aria-current="page"{% endif %}>Contacto</a></li>
+      </ul>
+    </div>
+  </nav>
+  {% endwith %}
+</header>
+
+<main id="contenido">
+  {% block content %}{% endblock %}
+</main>
+
+<footer class="site-footer">
+  <div class="container footer__grid">
+    <div class="footer__intro">
+      <p class="footer__brand">{{ site.site_name }}</p>
+      {% if site.footer_text %}<p class="note">{{ site.footer_text }}</p>{% endif %}
+    </div>
+    <div>
+      <h2 class="footer__title">Navegar</h2>
+      <ul class="footer__list">
+        <li><a href="{% url 'cursos' %}">Cursos</a></li>
+        <li><a href="{% url 'saber_mas' %}">Saber más</a></li>
+        <li><a href="{% url 'contacto' %}">Contacto</a></li>
+      </ul>
+    </div>
+    <div>
+      <h2 class="footer__title">Hablemos</h2>
+      <ul class="footer__list">
+        {% if site.instagram_url %}<li><a href="{{ site.instagram_url }}" target="_blank" rel="noopener noreferrer">{% icon 'instagram' 20 %}{{ site.instagram_label }}</a></li>{% endif %}
+        {% if site.contact_email %}<li><a href="mailto:{{ site.contact_email }}">{% icon 'mail' 20 %}{{ site.contact_email }}</a></li>{% endif %}
+        <li><a href="{% url 'contacto' %}">{% icon 'arrow-right' 20 %}Formulario de contacto</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer__bottom">
+    <div class="container footer__bottom-inner">
+      <ul class="legal-links">
+        <li><a href="{% url 'legal' 'aviso-legal' %}">Aviso legal</a></li>
+        <li><a href="{% url 'legal' 'privacidad' %}">Política de privacidad</a></li>
+        <li><a href="{% url 'legal' 'cookies' %}">Política de cookies</a></li>
+      </ul>
+      <p>© {{ year }} {{ site.site_name }}. Todos los derechos reservados.</p>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

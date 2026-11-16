@@ -1,0 +1,18 @@
+{% extends "magia/base.html" %}
+{% load magia_extras %}
+{% block title %}Mensaje enviado · {{ site.site_name }}{% endblock %}
+{% block content %}
+<section class="section">
+  <div class="container container--narrow">
+    <div class="panel panel--center">
+      <p class="script script--big">¡Gracias!</p>
+      <h1>Mensaje enviado</h1>
+      <p class="lead">Hemos recibido tu mensaje y te responderé lo antes posible al correo que nos has dejado.</p>
+      <div class="btn-row btn-row--center">
+        <a class="btn" href="{% url 'cursos' %}">Ver los cursos</a>
+        <a class="btn btn--outline" href="{% url 'index' %}">Volver al inicio</a>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

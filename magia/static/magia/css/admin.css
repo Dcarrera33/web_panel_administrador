@@ -1,0 +1,138 @@
+/* Aspecto del panel de gestión (/gestion/): usa los colores y tipografías del local (theme.css).
+   Se carga DESPUÉS del CSS de Django, así que sus variables se sobrescriben aquí. */
+
+:root,
+html[data-theme="light"],
+html[data-theme="dark"] {
+  --primary: var(--c-primary);
+  --secondary: var(--c-dark);
+  --accent: var(--c-accent);
+  --primary-fg: #fff;
+
+  --body-fg: #1d2a24;
+  --body-bg: #f6f4fa;
+  --body-quiet-color: #5d6a62;
+  --body-loud-color: #0d1a13;
+
+  --header-color: var(--c-light);
+  --header-branding-color: var(--c-accent);
+  --header-bg: var(--c-dark);
+  --header-link-color: var(--c-light);
+
+  --breadcrumbs-fg: color-mix(in srgb, var(--c-light) 75%, transparent);
+  --breadcrumbs-link-fg: var(--c-light);
+  --breadcrumbs-bg: var(--c-primary);
+
+  --link-fg: var(--c-primary);
+  --link-hover-color: color-mix(in srgb, var(--c-accent) 65%, #000);
+  --link-selected-fg: var(--c-primary);
+
+  --hairline-color: #e2deea;
+  --border-color: #cfc8de;
+  --darkened-bg: #ece8f4;
+  --selected-bg: #e2dcee;
+  --selected-row: color-mix(in srgb, var(--c-accent) 22%, #fff);
+
+  --button-fg: #fff;
+  --button-bg: var(--c-primary);
+  --button-hover-bg: color-mix(in srgb, var(--c-primary) 78%, #000);
+  --default-button-bg: var(--c-primary);
+  --default-button-hover-bg: color-mix(in srgb, var(--c-primary) 78%, #000);
+  --object-tools-fg: #fff;
+  --object-tools-bg: var(--c-primary);
+  --object-tools-hover-bg: color-mix(in srgb, var(--c-primary) 78%, #000);
+
+  --font-family-primary: var(--font-body, system-ui, sans-serif);
+  color-scheme: light;
+}
+
+body { font-family: var(--font-body, system-ui, sans-serif); background: var(--body-bg); }
+.theme-toggle { display: none !important; }
+
+/* Cabecera */
+#header { border-bottom: 3px solid var(--c-accent); }
+#site-name a { font-family: var(--font-title, Georgia, serif); font-size: 1.35rem; letter-spacing: .02em; text-decoration: none; color: var(--c-accent) !important; }
+#user-tools a { text-transform: uppercase; letter-spacing: .06em; font-size: .72rem; }
+div.breadcrumbs { text-transform: none; }
+
+/* Títulos */
+#content h1, .dash h2, .dash__all, .module h2, .module caption, .inline-group h2 {
+  font-family: var(--font-title, Georgia, serif);
+}
+#content h1 { color: var(--c-primary); font-size: 1.7rem; }
+.module h2, .module caption, .inline-group h2 { background: var(--c-primary); color: #fff; letter-spacing: .03em; }
+.module h2 a, .module caption a { color: #fff; }
+.app-web.module caption a { text-transform: none; }
+
+/* Botones de acciones y de guardar */
+.button, input[type=submit], input[type=button], .submit-row input, a.button { border-radius: 8px; }
+.submit-row input.default, input[type=submit].default { background: var(--c-primary); }
+.submit-row { background: var(--darkened-bg); border-radius: 10px; }
+.object-tools a { border-radius: 999px; }
+
+/* Tablas de listados */
+#changelist table thead th { background: var(--darkened-bg); }
+#changelist .actions { background: var(--darkened-bg); }
+#result_list img.thumb, .thumb { width: 46px; height: 46px; object-fit: cover; border-radius: 8px; display: block; }
+#result_list input[name$="-price_text"] { width: 7rem; }
+#result_list input[name$="-order"] { width: 3.4rem; }
+#changelist #toolbar form#changelist-search input[type=text] { border-radius: 8px; }
+
+/* Portada del panel */
+.dash__date { margin: 0 0 14px; font-size: 1.05rem; color: var(--body-quiet-color); }
+.dash__date::first-letter { text-transform: uppercase; }
+.dash__cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 14px; margin-bottom: 18px; }
+.dash-card {
+  display: grid; gap: 2px; padding: 16px 18px; border-radius: 14px; text-decoration: none;
+  background: #fff; border: 1px solid var(--border-color); color: var(--body-fg) !important;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, .06); transition: transform .15s, box-shadow .15s;
+}
+.dash-card:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0, 0, 0, .12); }
+.dash-card--main { background: var(--c-dark); border-color: var(--c-dark); color: var(--c-light) !important; }
+.dash-card__label { font-size: .72rem; letter-spacing: .14em; text-transform: uppercase; opacity: .75; }
+.dash-card__big { font-family: var(--font-title, Georgia, serif); font-size: 2.8rem; line-height: 1.05; font-weight: 700; color: var(--c-primary); }
+.dash-card--main .dash-card__big { color: var(--c-accent); }
+.dash-card__text { font-size: .9rem; opacity: .85; }
+
+.dash__actions { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 22px; }
+.dash-btn {
+  display: inline-block; padding: 10px 18px; border-radius: 999px; font-weight: 600; text-decoration: none;
+  background: var(--c-accent); color: #1b2a20 !important; transition: filter .15s;
+}
+.dash-btn:hover { filter: brightness(1.08); }
+
+.dash__grid { display: grid; grid-template-columns: 2fr 1fr; gap: 16px; margin-bottom: 8px; }
+.dash-box { background: #fff; border: 1px solid var(--border-color); border-radius: 14px; padding: 4px 18px 14px; }
+.dash-box h2 { margin: 14px 0 10px; font-size: 1.15rem; color: var(--c-primary); background: none; padding: 0; }
+.dash-table { width: 100%; border-collapse: collapse; }
+.dash-table th { text-align: left; font-size: .7rem; letter-spacing: .08em; text-transform: uppercase; color: var(--body-quiet-color); padding: 6px 8px; border-bottom: 1px solid var(--hairline-color); }
+.dash-table td { padding: 8px; border-bottom: 1px solid var(--hairline-color); }
+.dash-list { margin: 0 0 10px; padding: 0; list-style: none; }
+.dash-list li { padding: 6px 0; border-bottom: 1px solid var(--hairline-color); }
+.dash-empty { color: var(--body-quiet-color); }
+.dash__all { margin: 26px 0 6px; font-size: 1.15rem; color: var(--c-primary); }
+
+@media (max-width: 800px) { .dash__grid { grid-template-columns: 1fr; } }
+
+/* Portada: ocupa todo el ancho (sin la columna de "Acciones recientes") */
+body.dashboard .colMS { margin-right: 0; }
+body.dashboard #content-related { display: none; }
+body.dashboard #content-main { float: none; width: 100%; }
+body.dashboard #content { width: auto; }
+
+/* Botón «Cancelar» de las próximas reservas */
+.dash-cancel { background: transparent; color: #b3261e; border: 1px solid #b3261e; border-radius: 999px; padding: 3px 12px; font-size: .78rem; cursor: pointer; }
+.dash-cancel:hover { background: #b3261e; color: #fff; }
+/* Alérgenos: selector de color */
+#id_color { cursor: pointer; }
+
+/* ---- Específico de esta web ---- */
+.new-badge { display: inline-block; background: var(--c-magic); color: #fff; font-size: .66rem; letter-spacing: .08em; font-weight: 700; padding: 2px 8px; border-radius: 999px; }
+.dash-btn--ghost { background: transparent; color: var(--c-primary) !important; border: 1px solid var(--c-primary); }
+input.color-pick { width: 64px; height: 36px; padding: 2px; cursor: pointer; }
+.block-inline .form-row { padding: 8px 12px; }
+.inline-group .inline-related { border-radius: 10px; }
+textarea { max-width: 100%; }
+#id_home_text, #id_description, #id_about_intro, #id_contact_intro { width: min(100%, 720px); }
+#changelist-form .result-list img.thumb { width: 64px; height: 44px; }
+.aligned .vTextField { width: min(100%, 560px); }

@@ -1,0 +1,44 @@
+{% extends "magia/base.html" %}
+{% load static magia_extras %}
+{% block title %}{{ site.site_name }} · {{ site.home_title }}{% endblock %}
+{% block content %}
+{# INICIO: foto a la izquierda y texto a la derecha. Todo se cambia desde el panel (/gestion/ -> Textos y datos de la web). #}
+<section class="section section--hero">
+  <div class="container split">
+    <div class="split__photo">
+      {% if site.home_photo %}
+        <div class="arch"><img src="{{ site.home_photo.url }}" alt="" width="900" height="1100"></div>
+      {% else %}
+        <div class="arch arch--empty">
+          <div><img src="{% static 'magia/img/moon.svg' %}" alt="" width="90" height="90"><p class="note">Aquí va tu foto.<br>Súbela desde el panel de gestión.</p></div>
+        </div>
+      {% endif %}
+    </div>
+    <div class="split__text">
+      {% if site.home_kicker %}<p class="script">{{ site.home_kicker }}</p>{% endif %}
+      <h1 class="display">{{ site.home_title }}</h1>
+      <div class="richtext">{{ site.home_text|richtext }}</div>
+      {% if site.home_signature %}<p class="signature">{{ site.home_signature }}</p>{% endif %}
+      <div class="btn-row">
+        <a class="btn" href="{% url 'cursos' %}">{{ site.home_button_text }}</a>
+        <a class="btn btn--outline" href="{% url 'contacto' %}">Escríbeme</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+{# Los primeros cursos de la lista (el orden se cambia en el panel) #}
+{% if courses %}
+<section class="section">
+  <div class="container">
+    <header class="section-head">
+      <h2>Cursos</h2>
+      <a class="link-arrow" href="{% url 'cursos' %}">Ver todos los cursos {% icon 'arrow-right' 18 %}</a>
+    </header>
+    <ul class="course-list">
+      {% for c in courses %}{% include "magia/_course_row.html" %}{% endfor %}
+    </ul>
+  </div>
+</section>
+{% endif %}
+{% endblock %}

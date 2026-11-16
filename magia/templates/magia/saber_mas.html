@@ -1,0 +1,74 @@
+{% extends "magia/base.html" %}
+{% load magia_extras %}
+{% block title %}Saber más · {{ site.site_name }}{% endblock %}
+{% block content %}
+<section class="section">
+  <div class="container">
+    <header class="page-head">
+      <h1>Saber más</h1>
+      <p class="lead">Cómo son las clases, cómo funcionan los cursos y las respuestas a las dudas más habituales.</p>
+    </header>
+
+    {# CARRUSEL DE FOTOS: se gestiona en el panel (Carrusel de fotos) #}
+    {% if gallery %}
+    <div class="carousel-wrap">
+      <div class="carousel" data-carousel data-seconds="6" role="region" aria-roledescription="carrusel" aria-label="Fotos" tabindex="0">
+        <div class="carousel__viewport">
+          {% for g in gallery %}
+          <figure class="carousel__slide{% if forloop.first %} is-active{% endif %}">
+            <img src="{{ g.image.url }}" alt="{{ g.caption }}"{% if not forloop.first %} loading="lazy"{% endif %}>
+            {% if g.caption %}<figcaption>{{ g.caption }}</figcaption>{% endif %}
+          </figure>
+          {% endfor %}
+        </div>
+        {% if gallery|length > 1 %}
+        <button class="carousel__btn carousel__btn--prev" type="button" aria-label="Foto anterior">{% icon 'arrow-left' 20 %}</button>
+        <button class="carousel__btn carousel__btn--next" type="button" aria-label="Foto siguiente">{% icon 'arrow-right' 20 %}</button>
+        {% endif %}
+      </div>
+      {% if gallery|length > 1 %}
+      <div class="carousel__dots">{% for g in gallery %}<button type="button" aria-label="Ir a la foto {{ forloop.counter }}" aria-current="{% if forloop.first %}true{% else %}false{% endif %}"></button>{% endfor %}</div>
+      {% endif %}
+    </div>
+    {% endif %}
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <header class="section-head section-head--stack">
+      <h2>{{ site.about_title }}</h2>
+      {% if site.about_intro %}<div class="lead richtext">{{ site.about_intro|richtext }}</div>{% endif %}
+    </header>
+    {% if steps %}
+      <ol class="steps">
+        {% for s in steps %}<li><h3>{{ s.title }}</h3><div class="richtext">{{ s.text|richtext }}</div></li>{% endfor %}
+      </ol>
+    {% endif %}
+  </div>
+</section>
+
+{% if faqs %}
+<section class="section">
+  <div class="container faq-layout">
+    <header class="faq-layout__head">
+      <h2>Preguntas frecuentes</h2>
+      <p>¿No encuentras tu duda? <a href="{% url 'contacto' %}">Pregúntamela directamente</a>.</p>
+    </header>
+    <div class="faq">
+      {% for f in faqs %}<details><summary>{{ f.question }}</summary><div class="richtext">{{ f.answer|richtext }}</div></details>{% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<section class="cta-band">
+  <div class="container cta-band__inner">
+    <div>
+      <h2>¿Te quedan dudas?</h2>
+      <p class="lead">Escríbeme y lo resolvemos. También me encuentras en Instagram.</p>
+    </div>
+    <div class="btn-row"><a class="btn" href="{% url 'contacto' %}">Contactar</a>{% if site.instagram_url %}<a class="btn btn--outline" href="{{ site.instagram_url }}" target="_blank" rel="noopener noreferrer">Instagram</a>{% endif %}</div>
+  </div>
+</section>
+{% endblock %}

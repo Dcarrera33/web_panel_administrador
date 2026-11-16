@@ -1,0 +1,19 @@
+{% load static magia_extras %}{# Un curso en la lista (Inicio y Cursos). heading = etiqueta del título (h2 o h3). #}
+<li class="course-row">
+  <a class="course-row__link" href="{% url 'curso' c.slug %}">
+    <div class="course-row__img">
+      {% if c.image %}<img src="{{ c.image.url }}" alt="" loading="lazy">{% else %}<img class="course-row__placeholder" src="{% static 'magia/img/moon.svg' %}" alt="" width="56" height="56">{% endif %}
+    </div>
+    <div class="course-row__body">
+      <{{ heading|default:'h3' }} class="course-row__title">{{ c.title }}</{{ heading|default:'h3' }}>
+      <p>{{ c.summary }}</p>
+      <p class="course-row__meta">
+        <span class="stars" aria-hidden="true">{% for _ in c.level|level_stars %}{% icon 'star' 13 %}{% endfor %}</span>{{ c.get_level_display }}{% if c.duration %} · {{ c.duration }}{% endif %}{% if c.modality %} · {{ c.modality }}{% endif %}
+      </p>
+    </div>
+    <div class="course-row__end">
+      <p class="course-row__price">{{ c.price_text|default:"Consultar precio" }}</p>
+      <span class="course-row__more">Ver el curso {% icon 'arrow-right' 16 %}</span>
+    </div>
+  </a>
+</li>

@@ -1,0 +1,70 @@
+{% extends "magia/base.html" %}
+{% load magia_extras %}
+{% block title %}Contacto · {{ site.site_name }}{% endblock %}
+{% block content %}
+<section class="section">
+  <div class="container">
+    <header class="page-head">
+      <h1>Contacto</h1>
+      {% if site.contact_intro %}<div class="lead richtext">{{ site.contact_intro|richtext }}</div>{% endif %}
+    </header>
+
+    <div class="contact">
+      <div class="panel">
+        <form method="post" action="{% url 'contacto' %}" novalidate>
+          {% csrf_token %}
+          <div class="trap" aria-hidden="true"><label>Dejar vacío<input type="text" name="hp_zq7" tabindex="-1" autocomplete="off" data-lpignore="true" data-1p-ignore></label></div>
+          <div class="form-grid">
+            <div class="field {% if errors.name %}has-error{% endif %}">
+              <label for="name">Tu nombre</label>
+              <input id="name" type="text" name="name" maxlength="100" required autocomplete="name" value="{{ form.name|default:'' }}">
+              {% if errors.name %}<p class="field-error" role="alert">{{ errors.name }}</p>{% endif %}
+            </div>
+            <div class="field {% if errors.email %}has-error{% endif %}">
+              <label for="email">Tu correo</label>
+              <input id="email" type="email" name="email" maxlength="254" required autocomplete="email" value="{{ form.email|default:'' }}">
+              {% if errors.email %}<p class="field-error" role="alert">{{ errors.email }}</p>{% endif %}
+            </div>
+            {% if course_titles %}
+            <div class="field field--full">
+              <label for="course">Curso por el que preguntas (opcional)</label>
+              <select id="course" name="course">
+                <option value="">— Una consulta general —</option>
+                {% for t in course_titles %}<option value="{{ t }}" {% if form.course == t %}selected{% endif %}>{{ t }}</option>{% endfor %}
+              </select>
+            </div>
+            {% endif %}
+            <div class="field field--full {% if errors.message %}has-error{% endif %}">
+              <label for="message">Mensaje</label>
+              <textarea id="message" name="message" rows="6" maxlength="2000" required>{{ form.message|default:'' }}</textarea>
+              {% if errors.message %}<p class="field-error" role="alert">{{ errors.message }}</p>{% endif %}
+            </div>
+            <div class="field field--full {% if errors.consent %}has-error{% endif %}">
+              <label class="check">
+                <input type="checkbox" name="consent" value="1" {% if form.consent %}checked{% endif %}>
+                <span>Acepto el tratamiento de mis datos para atender mi consulta, según la <a href="{% url 'legal' 'privacidad' %}" target="_blank">Política de privacidad</a>.</span>
+              </label>
+              {% if errors.consent %}<p class="field-error" role="alert">{{ errors.consent }}</p>{% endif %}
+            </div>
+          </div>
+          <button class="btn btn--block" type="submit">Enviar mensaje</button>
+        </form>
+      </div>
+
+      <aside>
+        {% if site.instagram_url %}
+        <a class="insta" href="{{ site.instagram_url }}" target="_blank" rel="noopener noreferrer">
+          {% icon 'instagram' 32 %}
+          <div><strong>{{ site.instagram_label }}</strong><span>También puedes preguntarme por Instagram</span></div>
+        </a>
+        {% endif %}
+        <div class="panel side-card">
+          <h3>Escríbeme</h3>
+          <p>Te respondo lo antes posible, normalmente en uno o dos días.</p>
+          {% if site.contact_email %}<p><a href="mailto:{{ site.contact_email }}">{{ site.contact_email }}</a></p>{% endif %}
+        </div>
+      </aside>
+    </div>
+  </div>
+</section>
+{% endblock %}

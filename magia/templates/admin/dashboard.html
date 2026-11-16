@@ -1,0 +1,59 @@
+{% extends "admin/index.html" %}
+
+{% block content %}
+<div class="dash">
+  <p class="dash__date">{{ today|date:"l, j \d\e F \d\e Y" }}</p>
+
+  <div class="dash__cards">
+    <a class="dash-card dash-card--main" href="{% url 'admin:magia_message_changelist' %}?is_read__exact=0">
+      <span class="dash-card__label">Mensajes</span>
+      <span class="dash-card__big">{{ unread_count }}</span>
+      <span class="dash-card__text">sin leer</span>
+    </a>
+    <a class="dash-card" href="{% url 'admin:magia_course_changelist' %}">
+      <span class="dash-card__label">Cursos</span>
+      <span class="dash-card__big">{{ course_count }}</span>
+      <span class="dash-card__text">visible{{ course_count|pluralize }}{% if hidden_courses %} · {{ hidden_courses }} oculto{{ hidden_courses|pluralize }}{% endif %}</span>
+    </a>
+    <a class="dash-card" href="{% url 'admin:magia_galleryimage_changelist' %}">
+      <span class="dash-card__label">Carrusel</span>
+      <span class="dash-card__big">{{ photo_count }}</span>
+      <span class="dash-card__text">foto{{ photo_count|pluralize }} en «Saber más»</span>
+    </a>
+  </div>
+
+  <div class="dash__actions">
+    <a class="dash-btn" href="{% url 'admin:magia_sitecontent_changelist' %}">Editar textos y foto de inicio</a>
+    <a class="dash-btn" href="{% url 'admin:magia_course_add' %}">Añadir un curso</a>
+    <a class="dash-btn" href="{% url 'admin:magia_course_changelist' %}">Cursos</a>
+    <a class="dash-btn" href="{% url 'admin:magia_galleryimage_add' %}">Añadir foto al carrusel</a>
+    <a class="dash-btn" href="{% url 'admin:magia_message_changelist' %}">Mensajes</a>
+    <a class="dash-btn dash-btn--ghost" href="/" target="_blank" rel="noopener">Ver la web ↗</a>
+  </div>
+
+  <section class="dash-box">
+    <h2>Últimos mensajes</h2>
+    {% if latest_messages %}
+      <table class="dash-table">
+        <thead><tr><th></th><th>Cuándo</th><th>Nombre</th><th>Curso</th><th>Mensaje</th></tr></thead>
+        <tbody>
+        {% for m in latest_messages %}
+          <tr>
+            <td>{% if not m.is_read %}<span class="new-badge">NUEVO</span>{% endif %}</td>
+            <td>{{ m.created_at|date:"j/n H:i" }}</td>
+            <td><a href="{% url 'admin:magia_message_change' m.pk %}">{{ m.name }}</a></td>
+            <td>{{ m.course|default:"—" }}</td>
+            <td>{{ m.message|truncatechars:70 }}</td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    {% else %}
+      <p class="dash-empty">Todavía no ha llegado ningún mensaje.</p>
+    {% endif %}
+  </section>
+</div>
+
+<h2 class="dash__all">Todo el panel</h2>
+{{ block.super }}
+{% endblock %}

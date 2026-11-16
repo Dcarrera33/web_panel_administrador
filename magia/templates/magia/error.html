@@ -1,0 +1,13 @@
+{% extends "magia/base.html" %}
+{% block title %}{{ code }} · {{ site.site_name }}{% endblock %}
+{% block content %}
+<section class="section">
+  <div class="container container--narrow">
+    <div class="panel panel--center">
+      <p class="error-code">{{ code }}</p>
+      {% if message %}<p class="lead">{{ message }}</p>{% endif %}
+      <a class="btn" href="{% url 'index' %}">Volver al inicio</a>
+    </div>
+  </div>
+</section>
+{% endblock %}

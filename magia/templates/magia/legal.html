@@ -1,0 +1,16 @@
+{% extends "magia/base.html" %}
+{% block title %}{{ title }} · {{ site.site_name }}{% endblock %}
+{% block content %}
+<section class="section">
+  <div class="container container--narrow">
+    <div class="panel prose">
+      <h1>{{ title }}</h1>
+      {% for kind, body in blocks %}
+        {% if kind == "h2" %}<h2>{{ body }}</h2>
+        {% elif kind == "ul" %}<ul>{% for item in body %}<li>{{ item }}</li>{% endfor %}</ul>
+        {% else %}<p>{{ body }}</p>{% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endblock %}
